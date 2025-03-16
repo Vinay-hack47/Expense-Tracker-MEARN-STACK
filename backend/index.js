@@ -11,10 +11,12 @@ import expenseRouter from "./router/expense.route.js"
 //set up env file
 dotenv.config({});
 
+const PORT = process.env.PORT || 5000
+
 const app = express();
 connectDB();
 
-const PORT = 8000;
+
 
 app.get("/" , (req,res) =>{
   res.send("Hello World");

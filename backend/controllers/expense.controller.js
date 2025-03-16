@@ -123,4 +123,3 @@ export const updateExpense = async(req,res) =>{
     
   }
 }
-
