@@ -14,7 +14,7 @@ const useGetExpenses = () =>{
       const fetchExpenses = async() =>{
         try {
            axios.defaults.withCredentials=true;
-           const res = await axios.get(`http://localhost:8000/api/v1/expense/getAll?category=${category}&done=${markAsDone}`)
+           const res = await axios.get(`${import.meta.env.BACKEND_URL}/api/v1/expense/getAll?category=${category}&done=${markAsDone}`)
 
            if(res.data.success){
             

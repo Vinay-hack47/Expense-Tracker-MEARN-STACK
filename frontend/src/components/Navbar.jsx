@@ -20,7 +20,7 @@ const Navbar = () => {
 
   const logoutHandler = async() =>{
       try {
-        const res = await axios.post("http://localhost:8000/api/v1/user/logout");
+        const res = await axios.post(`${import.meta.env.BACKEND_URL}/api/v1/user/logout`);
 
       if(res.data.success){
         toast.success(res.data.msg)
