@@ -37,7 +37,7 @@ const ExpenseTable = () => {
   const deleteHandler = async (expenseId) => {
     console.log(expenseId);
     try {
-      const res = await axios.delete(`${import.meta.env.BACKEND_URL}/api/v1/expense/remove/${expenseId}`, {
+      const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/v1/expense/remove/${expenseId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -59,7 +59,7 @@ const ExpenseTable = () => {
   const handleCheckboxChange = async (expenseId) => {
     const newStatus = !checkedItems[expenseId];
     try {
-      const res = await axios.put(`${import.meta.env.BACKEND_URL}/api/v1/expense/${expenseId}/done`, { done: newStatus }, {
+      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/v1/expense/${expenseId}/done`, { done: newStatus }, {
         headers: {
           "Content-Type": "application/json",
         },

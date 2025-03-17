@@ -74,7 +74,7 @@ const UpdateExpense = ({ expenseId }) => {
 
     try {
       setIsLoading(true);
-      const res = await axios.put(`${import.meta.env.BACKEND_URL}/api/v1/expense/update/${expenseId}`, updatedData, {
+      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/v1/expense/update/${expenseId}`, updatedData, {
         headers: {
           "Content-Type": "application/json"
         },

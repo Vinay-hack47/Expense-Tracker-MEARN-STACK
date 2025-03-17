@@ -62,7 +62,7 @@ const CreateExpense = () => {
 
     try {
       setIsLoading(true);
-      const res = await axios.post(`${import.meta.env.BACKEND_URL}/api/v1/expense/create`, expenseData, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/expense/create`, expenseData, {
         headers: {
           "Content-Type": "application/json"
         },

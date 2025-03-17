@@ -26,7 +26,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${import.meta.env.BACKEND_URL}/api/v1/user/register`, userData,{
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`, userData,{
         headers: {
           'Content-Type': 'application/json',
           },
