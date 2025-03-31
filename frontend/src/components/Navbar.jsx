@@ -47,7 +47,7 @@ const Navbar = () => {
                   <AvatarImage src={profilePhoto} />
                 </Avatar>
               </PopoverTrigger>
-              <PopoverContent className="bg-gray-400">
+              <PopoverContent className="bg-white">
                   <Button className="cursor-pointer"  variant="link" onClick={logoutHandler}>Logout</Button>
               </PopoverContent>
             </Popover>

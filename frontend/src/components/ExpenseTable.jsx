@@ -29,7 +29,7 @@ const ExpenseTable = () => {
 
   const totalAmount = expenses.reduce((acc, expense) => {
     if (!checkedItems[expense._id]) {
-      return acc + expense.amount;
+      return acc + expense.convertedAmount;
     }
     return acc;
   }, 0);
@@ -114,7 +114,7 @@ const ExpenseTable = () => {
                 
               </TableCell>
               <TableCell className={`${expense.done ? "line-through" : ""}`}>{expense.description}</TableCell>
-              <TableCell  className={`${expense.done ? "line-through" : ""}`}>{expense.amount}</TableCell>
+              <TableCell  className={`${expense.done ? "line-through" : ""}`}>{expense.amount} {expense.originalCurrency}</TableCell>
               <TableCell  className={`${expense.done ? "line-through" : ""}`}>{expense.category}</TableCell>
               <TableCell  className={`${expense.done ? "line-through" : ""}`}>{expense.createdAt?.split("T")[0]}</TableCell>
               <TableCell className="text-right">

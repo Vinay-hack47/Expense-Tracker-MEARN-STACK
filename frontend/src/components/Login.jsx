@@ -4,6 +4,7 @@ import { toast } from "sonner"
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setAuthUser } from '@/redux/authSlice'
+import { setExpenses } from '@/redux/expenseSlice'
 
 const Login = () => {
 
@@ -33,7 +34,21 @@ const Login = () => {
       if (res.data.msg) {
         dispatch(setAuthUser(res.data.user))
         toast.success(res.data.msg);
+
         navigate("/");
+
+
+        // Fetch expenses after login
+        const expensesRes = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/expense/getAll`, {
+          withCredentials: true
+        });
+
+        if (expensesRes.data.success) {
+          dispatch(setExpenses(expensesRes.data.expense));
+        }
+
+
+        
       }
 
     } catch (error) {

@@ -38,7 +38,11 @@ const CreateExpense = () => {
     description: "",
     amount: "",
     category: "",
+    originalCurrency: "",
   });
+
+  console.log(expenseData);
+  
 
   const navigate = useNavigate();
 
@@ -46,7 +50,7 @@ const CreateExpense = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const {expenses} = useSelector(store => store.expense)
+  const { expenses } = useSelector(store => store.expense)
 
 
   const changeHandler = (e) => {
@@ -74,6 +78,7 @@ const CreateExpense = () => {
         toast.success(res.data.msg)
         setIsOpen(false);
       }
+      setExpenseData("");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.msg);
@@ -109,7 +114,7 @@ const CreateExpense = () => {
                 </Label>
                 <Input onChange={changeHandler} name="amount" value={expenseData.amount} id="amount" placeholder="xxx in ₹" className="col-span-3" />
               </div>
-              <div>
+              <div className='flex items-center justify-between'>
                 <Select onValueChange={categoryHandler}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue className="cursor-pointer" placeholder="Select a category" />
@@ -122,6 +127,20 @@ const CreateExpense = () => {
                       <SelectItem className="cursor-pointer" value="shopping">Shopping</SelectItem>
                       <SelectItem className="cursor-pointer" value="others">Others</SelectItem>
                     </SelectGroup>
+                  </SelectContent>
+                </Select>
+
+                <Select onValueChange={(value) => setExpenseData({ ...expenseData, originalCurrency: value })}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue  placeholder="Select Currency" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white  text-black shadow-lg backdrop:bg-black/50">
+                  <SelectGroup className="cursor-pointer">
+                    <SelectItem value="INR">INR</SelectItem>
+                    <SelectItem value="USD">USD</SelectItem>
+                    <SelectItem value="EUR">EUR</SelectItem>
+                    <SelectItem value="GBP">GBP</SelectItem>
+                  </SelectGroup>
                   </SelectContent>
                 </Select>
               </div>
