@@ -1,9 +1,14 @@
 import axios from "axios";
+import dotenv from "dotenv";
 
-// const API_KEY = "your-api-key"; // Replace with your API key
-const BASE_URL =" https://v6.exchangerate-api.com/v6/f284b4e225130900a2c21a5a/latest"
+dotenv.config();
 
-export const convertCurrency = async (amount, fromCurrency, toCurrency) => {
+const BASE_URL =` https://v6.exchangerate-api.com/v6/${process.env.API_KEY}/latest`
+
+console.log(BASE_URL);
+
+
+export const convertCurrency = async (amount, fromCurrency, toCurrency ) => {
   try {
     const res = await axios.get(`${BASE_URL}/${fromCurrency}`);
 

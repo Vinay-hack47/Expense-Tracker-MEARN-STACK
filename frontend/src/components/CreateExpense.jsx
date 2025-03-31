@@ -81,8 +81,7 @@ const CreateExpense = () => {
       setExpenseData("");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.msg);
-      navigate("/login")
+      toast.error(error.response.data.msg || error.response.data.message);
     } finally {
       setIsLoading(false)
     }

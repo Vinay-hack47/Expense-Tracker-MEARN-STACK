@@ -16,7 +16,7 @@ const Navbar = () => {
   const {user} = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const logoutHandler = async() =>{
       try {
@@ -24,7 +24,7 @@ const Navbar = () => {
 
       if(res.data.success){
         toast.success(res.data.msg)
-        navigate("/login");
+        // navigate("/login");
         dispatch(setAuthUser(null));
       }
       } catch (error) {
