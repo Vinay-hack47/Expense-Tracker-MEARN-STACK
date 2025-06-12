@@ -6,6 +6,10 @@ import Home from './components/Home'
 import Register from './components/Register'
 import { Toaster } from "@/components/ui/sonner"
 import { useSelector } from 'react-redux'
+import GroupManagement from './components/GroupManagement'
+import Groups from './components/group/Groups'
+import GroupDetails from './components/group/GroupDetails'
+import GroupExpensePage from './components/group/GroupExpensePage'
 
 const appRouter = createBrowserRouter([
   {
@@ -19,7 +23,19 @@ const appRouter = createBrowserRouter([
   {
     path: '/register',
     element: <Register />
-  }
+  },
+  {
+    path: "/groups",
+    element : <Groups></Groups>
+  },
+  {
+    path: "/groups/:groupId",
+    element : <GroupDetails></GroupDetails>
+  },
+  {
+    path: "/expenses/group/:groupId",
+    element : <GroupExpensePage></GroupExpensePage>
+  },
 ])
 
 function App() {

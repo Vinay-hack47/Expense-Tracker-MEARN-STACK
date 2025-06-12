@@ -1,7 +1,9 @@
 import { query } from "express";
 import { Expense } from "../models/expense.model.js";
 import { User } from "../models/user.model.js";
-import { convertCurrency } from "../api/convertCurrency.api.js";
+import { convertCurrency } from "../utils/convertCurrency.api.js";
+import {sendEmailNotifications} from "../utils/sendEmail.js"
+import { Group } from "../models/group.model.js";
 
 export const createExpense = async (req, res) => {
   try {
@@ -25,7 +27,6 @@ export const createExpense = async (req, res) => {
     );
     
     
-
     const expense = await Expense.create({
       description: description,
       category: category,
@@ -33,7 +34,19 @@ export const createExpense = async (req, res) => {
       userId: userId,
       originalCurrency: originalCurrency,
       convertedAmount: convertedAmount,
+      // groupId: groupId || null,
     });
+
+
+    // if (groupId) {
+    //   const group = await Group.findById(groupId).populate("members.userId");
+    //   const admin = group.members.find((member) => member.role === "admin");
+    //   const memberEmails = group.members
+    //     .filter((member) => member.userId.toString() !== admin.userId.toString())
+    //     .map((member) => member.userId.email);
+
+    //   sendEmailNotifications(admin.userId.email, memberEmails, `New expense added to group: ${group.name}`);
+    // }
 
     return res
       .status(201)
@@ -81,6 +94,43 @@ export const getAllExpense = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getGroupExpenses = async(req,res) =>{
+  try {
+    const groupId = req.paramas.groupId;
+    const userId = req.id;
+
+    //check if user is in group
+    const group = await Group.findById(groupId).populate("members.userId")
+    if (!group || !group.members.some(member => member.userId.toString() === userId)){
+      return res.status(404).json({msg: "Not Group Member", success:false});
+    }
+
+    const expenses = await Expense.find({groupId: groupId}).sort({createdAt: -1});
+
+    return res.status(200).json({msg: "Group Expenses", success:true, expenses});
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export const settleExpense = async (req, res) => {
+  const expenseId = req.params.id;
+  const userId = req.id;
+
+  const expense = await Expense.findById(expenseId);
+  if (!expense) return res.status(404).json({ success: false, msg: "Not found" });
+  if (expense.paidBy.toString() !== userId) {
+    return res.status(403).json({ success: false, msg: "Only payer can settle" });
+  }
+
+  expense.settled = true;
+  await expense.save();
+  return res.status(200).json({ success: true, msg: "Expense settled" });
+};
+
 
 export const markAsDoneOrUndone = async (req, res) => {
   try {

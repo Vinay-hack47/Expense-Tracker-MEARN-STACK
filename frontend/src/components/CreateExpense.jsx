@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -29,9 +29,10 @@ import { setExpenses } from '@/redux/expenseSlice';
 import { useNavigate } from 'react-router-dom';
 
 
-const CreateExpense = () => {
+const CreateExpense = ({ groupId = null }) => {
   // const [open , setOpen] = useState(false);
   // console.log(open);
+
 
 
   const [expenseData, setExpenseData] = useState({
@@ -39,18 +40,50 @@ const CreateExpense = () => {
     amount: "",
     category: "",
     originalCurrency: "",
+    groupId: groupId || "",
   });
 
+  useEffect(() => {
+    if (groupId) {
+      setExpenseData((prev) => ({ ...prev, groupId: groupId }))
+    }
+  }, [groupId])
+
   console.log(expenseData);
-  
+
 
   const navigate = useNavigate();
+
+  const [groups, setGroups] = useState([]); // State to store the list of groups
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const { expenses } = useSelector(store => store.expense)
+  const { expenses } = useSelector(store => store.expense);
+  const {allMyGroups} = useSelector(store => store.group);
+
+
+
+  // Fetch groups for the logged-in user
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/group/getGroups`, {
+          withCredentials: true,
+        });
+        if (res.data.success) {
+          setGroups(res.data.groups); // Set the fetched groups
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to fetch groups");
+      }
+    };
+
+    fetchGroups();
+  }, []);
+
 
 
   const changeHandler = (e) => {
@@ -131,18 +164,47 @@ const CreateExpense = () => {
 
                 <Select onValueChange={(value) => setExpenseData({ ...expenseData, originalCurrency: value })}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue  placeholder="Select Currency" />
+                    <SelectValue placeholder="Select Currency" />
                   </SelectTrigger>
                   <SelectContent className="bg-white  text-black shadow-lg backdrop:bg-black/50">
-                  <SelectGroup className="cursor-pointer">
-                    <SelectItem value="INR">INR</SelectItem>
-                    <SelectItem value="USD">USD</SelectItem>
-                    <SelectItem value="EUR">EUR</SelectItem>
-                    <SelectItem value="GBP">GBP</SelectItem>
-                  </SelectGroup>
+                    <SelectGroup className="cursor-pointer">
+                      <SelectItem value="INR">INR</SelectItem>
+                      <SelectItem value="USD">USD</SelectItem>
+                      <SelectItem value="EUR">EUR</SelectItem>
+                      <SelectItem value="GBP">GBP</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               </div>
+
+              {!groupId && (
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="groupId" className="text-right">Group</Label>
+                  <Select
+                    onValueChange={(value) =>
+                      setExpenseData({ ...expenseData, groupId: value === "personal" ? "" : value })
+                    }
+                    value={expenseData.groupId || ""}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Group (Optional)" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white text-black shadow-lg backdrop:bg-black/50">
+                      <SelectGroup>
+                        <SelectItem value="personal">Personal</SelectItem>
+                        {allMyGroups.map((group) => (
+                          <SelectItem key={group?._id} value={group?._id}>
+                            {group?.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+
+
             </div>
             <DialogFooter>
               {
@@ -161,7 +223,7 @@ const CreateExpense = () => {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
 
 export default CreateExpense

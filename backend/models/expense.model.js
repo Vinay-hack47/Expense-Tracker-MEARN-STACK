@@ -33,6 +33,16 @@ const expenseSchema = new mongoose.Schema(
     convertedAmount: {
       type: Number,
     },
+    groupId: { type: mongoose.Schema.Types.ObjectId, ref: "Group" }, // Null for personal expenses
+    paidBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    settled: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

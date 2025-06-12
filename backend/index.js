@@ -3,8 +3,9 @@ import connectDB from "./db/connectDB.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import userRouter from "./router/user.route.js"
-import expenseRouter from "./router/expense.route.js"
+import userRouter from "./router/user.route.js";
+import expenseRouter from "./router/expense.route.js";
+import groupRouter from "./router/group.route.js";
 
 
 
@@ -35,6 +36,7 @@ app.use(cors(corsOptions));
 //api's
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/expense", expenseRouter);
+app.use("/api/v1/group", groupRouter);
 
 
 app.listen(PORT, () =>{

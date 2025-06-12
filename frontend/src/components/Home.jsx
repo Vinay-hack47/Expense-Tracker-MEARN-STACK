@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { setCategory, setMarkAsDone } from '@/redux/expenseSlice'
 import ExpenseTable from './ExpenseTable'
 import useGetExpenses from '@/hooks/useGetExpenses'
+import GroupManagement from './GroupManagement'
 
 const Home = () => {
   useGetExpenses();
@@ -31,7 +32,7 @@ const Home = () => {
       <Navbar></Navbar>
       <div className='max-w-6xl mx-auto mt-6'>
         <div className='flex items-center justify-between mb-5'>
-          <h1>Expenses</h1>
+          <h1 className='font-bold text-xl'>Expenses</h1>
           <CreateExpense></CreateExpense>
         </div>
 
@@ -65,6 +66,7 @@ const Home = () => {
             </SelectContent>
           </Select>
         </div>
+        {/* <GroupManagement></GroupManagement> */}
         <ExpenseTable></ExpenseTable>
       </div>
     </div>

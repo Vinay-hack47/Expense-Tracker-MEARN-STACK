@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from './shared/Logo'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -38,6 +38,7 @@ const Navbar = () => {
     <div className='boarder-b border-gray-300'>
       <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
         <Logo></Logo>
+        <h1 className='font-bold text-black text-2xl'>Expense<span className='font-bold text-green-600 text-2xl'>Tracker</span></h1>
         {
           user ? (
             <Popover>

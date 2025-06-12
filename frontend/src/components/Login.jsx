@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setAuthUser } from '@/redux/authSlice'
 import { setExpenses } from '@/redux/expenseSlice'
+import Logo from "./shared/Logo"
 
 const Login = () => {
 
@@ -37,7 +38,6 @@ const Login = () => {
 
         navigate("/");
 
-
         // Fetch expenses after login
         const expensesRes = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/expense/getAll`, {
           withCredentials: true
@@ -46,22 +46,21 @@ const Login = () => {
         if (expensesRes.data.success) {
           dispatch(setExpenses(expensesRes.data.expense));
         }
-
-
-        
       }
 
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.msg)
     }
-
   }
 
   return (
     <div className='flex flex-col items-center justify-center w-screen mt-30 gap-2'>
       <form onSubmit={submitHandler} className='flex flex-col p-4 bg-white w-[20%]'>
-        <h1 className='font-bold uppercase my-2 text-2xl'>Login</h1>
+        <div className='w-full flex justify-center'>
+          <Logo></Logo>
+        </div>
+          <h1 className='font-bold uppercase my-2 text-2xl flex justify-center'>Login</h1>
         <input onChange={changeHandler} type="text" placeholder='Email' name='email' value={userData.email} className='my-2 border border:gray-400 rounded-md px-2 py-1' />
         <input onChange={changeHandler} type="text" placeholder='Password' name='password' value={userData.password} className='my-2 border border:gray-400 rounded-md px-2 py-1' />
         <button type='sumbit' className='bg-gray-800  px-2 py-1 my-2 text-white cursor-pointer'>Login</button>

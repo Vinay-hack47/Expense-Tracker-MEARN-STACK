@@ -59,7 +59,7 @@ const Register = () => {
       
           
         <Select  onValueChange={(value) => setUserData({ ...userData, defaultCurrency: value })}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full my-2">
             <SelectValue className="cursor-pointer" placeholder="Select Default Currency" />
           </SelectTrigger>
           <SelectContent className=" bg-white text-black shadow-lg backdrop:bg-black/50">
