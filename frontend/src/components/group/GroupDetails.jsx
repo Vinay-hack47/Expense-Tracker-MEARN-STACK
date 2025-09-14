@@ -86,10 +86,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMySingleGroup } from "@/redux/groupSlice";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import CreateGroupDialog from "./CreateGroupExpense";
+import CreateGroupExpense from "./CreateGroupExpense";
+import useGetAllGroupExpenses from "@/hooks/useGetAllGroupExpenses";
+import { setGroupExpenses } from "@/redux/groupExpenseSlice";
 
 const GroupDetails = () => {
   // const fetchAllMyGroups = useGetAllMyGroups(); // now a callable function
   const { groupId } = useParams();
+  // useGetAllGroupExpenses(groupId);
+  const fetchExpenses = useGetAllGroupExpenses();
+
   // const [group, setGroup] = useState(null);
   // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -151,7 +158,10 @@ const GroupDetails = () => {
           <Button
             variant="ghost"
             className="flex items-center gap-2 text-gray-600 mb-4 hover:bg-gray-100"
-            onClick={() => navigate('/groups')}
+            onClick={() => {
+              navigate('/groups'),
+              dispatch(setGroupExpenses([]))
+            }}
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Back to Groups</span>
@@ -169,13 +179,14 @@ const GroupDetails = () => {
               </div>
             </div>
 
-            <Button
+            {/* <Button
               className="bg-black text-white hover:bg-gray-800 shadow-md flex items-center gap-2 px-6 py-2 font-medium cursor-pointer"
               onClick={() => navigate(`/create-expense/${groupId}`)}
             >
               <Plus className="h-5 w-5" />
               <span>Create Group Expense</span>
-            </Button>
+            </Button> */}
+            <CreateGroupExpense onCreate={fetchExpenses} groupId={groupId}></CreateGroupExpense>
           </div>
         </div>
 

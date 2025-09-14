@@ -1,16 +1,16 @@
 // pages/groups/Groups.jsx
 import { useEffect, useState } from "react";
 import axios from "axios";
-import CreateGroupDialog from "./CreateGroupDialog";
 import GroupListCard from "./GroupListCard";
 import Navbar from "../Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllMyGroups } from "@/redux/groupSlice";
 import store from "@/redux/store";
 import useGetAllMyGroups from "@/hooks/useGetAllMyGroups";
+import GroupManagement from "../GroupManagement";
+import CreateGroupDialog from "./CreateGroupDialog";
 
 const Groups = () => {
-   const fetchAllMyGroups = useGetAllMyGroups(); // now a callable function
   const dispatch = useDispatch();
   const {allMyGroups} = useSelector((store) => store.group)
   
@@ -25,7 +25,7 @@ const Groups = () => {
       <div className="p-6 space-y-6 mt-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">My Groups</h1>
-          <CreateGroupDialog  onCreated={fetchAllMyGroups} />
+          <CreateGroupDialog /> 
         </div>
 
         {loading ? (

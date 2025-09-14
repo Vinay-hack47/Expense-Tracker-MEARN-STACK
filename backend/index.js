@@ -6,22 +6,28 @@ import dotenv from "dotenv";
 import userRouter from "./router/user.route.js";
 import expenseRouter from "./router/expense.route.js";
 import groupRouter from "./router/group.route.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 
 
 //set up env file
 dotenv.config({});
 
-const PORT = process.env.PORT || 5000
+const PORT = 8000
 
 const app = express();
 connectDB();
 
 
 
-app.get("/" , (req,res) =>{
-  res.send("Hello World");
-})
+// app.get("/" , (req,res) =>{
+//   res.send("Hello World");
+// })
+
+// const _dirname = path.resolve()
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //set up middleware
 app.use(express.json());
@@ -33,10 +39,16 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
+
 //api's
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/expense", expenseRouter);
 app.use("/api/v1/group", groupRouter);
+
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+});
 
 
 app.listen(PORT, () =>{

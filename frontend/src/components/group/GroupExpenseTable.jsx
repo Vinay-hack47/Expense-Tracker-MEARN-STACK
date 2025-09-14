@@ -10,18 +10,21 @@ import UpdateExpense from "./UpdateExpense";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "sonner";
-import { setGroupExpenses } from "@/redux/groupExpenseSlice";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import { setGroupExpenses } from "@/redux/groupExpenseSlice";
 
 const GroupExpenseTable = () => {
   const dispatch = useDispatch();
-  const { expenses, groupInfo } = useSelector(s => s.groupExpense);
+  const { groupExpenses } = useSelector(s => s.groupExpense);
+  const {mySingleGroup} = useSelector((store) => store.group);
   const { user } = useSelector(s => s.auth);
   const [settled, setSettled] = useState({});
 
-  const memberCount = groupInfo.members.length;
-  const total = expenses.reduce((sum, e) => sum + e.amount, 0);
+  const memberCount = mySingleGroup.members.length;
+  const total = groupExpenses.reduce((sum, e) => sum + e.amount, 0);
+  console.log(total);
+  
 
   const deleteHandler = async id => {
     try {
@@ -30,7 +33,7 @@ const GroupExpenseTable = () => {
         { withCredentials: true }
       );
       if (res.data.success) {
-        dispatch(setGroupExpenses(expenses.filter(e => e._id !== id)));
+        dispatch(setGroupExpenses(groupExpenses.filter(e => e._id !== id)));
         toast.success(res.data.msg);
       }
     } catch (e) {
@@ -69,7 +72,7 @@ const GroupExpenseTable = () => {
       </TableHeader>
 
       <TableBody>
-        {expenses.map(exp => {
+        {groupExpenses.map(exp => {
           const isPayer = exp.paidBy === user._id;
           const share = (exp.amount / memberCount).toFixed(2);
           return (

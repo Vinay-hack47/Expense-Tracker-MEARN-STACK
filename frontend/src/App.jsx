@@ -10,6 +10,7 @@ import GroupManagement from './components/GroupManagement'
 import Groups from './components/group/Groups'
 import GroupDetails from './components/group/GroupDetails'
 import GroupExpensePage from './components/group/GroupExpensePage'
+import GroupExpenseTable from './components/group/GroupExpenseTable'
 
 const appRouter = createBrowserRouter([
   {

@@ -4,12 +4,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const groupExpenseSlice = createSlice({
   name: "groupExpense",
   initialState: {
-    expenses: [],
+    groupExpenses: [],
     groupInfo: null,      // { name, members: [{ _id, name, email }], ... }
   },
   reducers: {
     setGroupExpenses(state, action) {
-      state.expenses = action.payload;
+      state.groupExpenses = action.payload;
     },
     setGroupInfo(state, action) {
       state.groupInfo = action.payload;

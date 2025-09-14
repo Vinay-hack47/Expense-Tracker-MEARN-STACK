@@ -3,11 +3,12 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setGroupExpenses, setGroupInfo } from "@/redux/groupExpenseSlice";
 import Navbar from "@/components/Navbar";
-import CreateExpense from "@/components/CreateExpense";
 // import GroupSummary from "@/components/GroupSummary";
 import GroupExpenseTable from "../group/GroupExpenseTable";
+import {  setGroupExpenses, setGroupInfo } from "@/redux/groupExpenseSlice";
+import CreateGroupExpense from "./CreateGroupExpense";
+import GroupSummary from "./GroupSummary";
 
 const GroupExpensePage = () => {
   const { groupId } = useParams();
@@ -47,8 +48,8 @@ const GroupExpensePage = () => {
       <Navbar />
       <div className="max-w-6xl mx-auto mt-6">
         <h1 className="font-bold text-xl mb-4">Group: <p>Vinay</p></h1>
-        <CreateExpense groupId={groupId} />
-        {/* <GroupSummary /> */}
+        <GroupSummary />
+        <CreateGroupExpense groupId={groupId}></CreateGroupExpense>
         <GroupExpenseTable />
       </div>
     </>

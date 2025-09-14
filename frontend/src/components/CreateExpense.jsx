@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import axios from 'axios';
 import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setExpenses } from '@/redux/expenseSlice';
 import { useNavigate } from 'react-router-dom';
@@ -82,7 +82,7 @@ const CreateExpense = ({ groupId = null }) => {
     };
 
     fetchGroups();
-  }, []);
+  }, []);  
 
 
 
@@ -123,7 +123,7 @@ const CreateExpense = ({ groupId = null }) => {
     <div>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button onClick={() => setIsOpen(true)} className="cursor-pointer" variant="outline">Add New Expense</Button>
+          <Button onClick={() => setIsOpen(true)} className="cursor-pointer bg-green-600 text-white" ><Plus className="h-5 w-5" />Add New Expense</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px] bg-white text-black shadow-lg backdrop:bg-black/30 z-[50]">
           <DialogHeader>
