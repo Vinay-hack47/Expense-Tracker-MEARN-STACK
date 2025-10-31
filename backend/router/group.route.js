@@ -26,4 +26,4 @@ router.post("/:groupId/add", isAuthenticated, addMemberToGroup);
 router.delete("/:groupId/remove/:memberId", isAuthenticated, removeMemberFromGroup);
 router.get("/expense/group/get/:groupId", getGroupExpenses);
 router.post("/expense/group/create/:groupId", isAuthenticated,createGroupExpense);
-export default router;
+export default router;  

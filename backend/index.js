@@ -10,9 +10,12 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //set up env file
-dotenv.config({});
+// dotenv.config({});
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const PORT = 8000
 
@@ -26,8 +29,6 @@ connectDB();
 // })
 
 // const _dirname = path.resolve()
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 //set up middleware
 app.use(express.json());

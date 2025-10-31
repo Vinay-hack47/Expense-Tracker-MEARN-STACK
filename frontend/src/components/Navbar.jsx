@@ -13,24 +13,24 @@ import { setAuthUser } from '@/redux/authSlice';
 const Navbar = () => {
 
   // const user = true;
-  const {user} = useSelector(store => store.auth);
+  const { user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
   // const navigate = useNavigate();
 
-  const logoutHandler = async() =>{
-      try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`);
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`);
 
-      if(res.data.success){
+      if (res.data.success) {
         toast.success(res.data.msg)
         // navigate("/login");
         dispatch(setAuthUser(null));
       }
-      } catch (error) {
-        console.log(error);
-        toast.error(error.response.data.message)
-      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message)
+    }
   }
 
   const profilePhoto = "https://avatar.iran.liara.run/public/boy"
@@ -43,19 +43,25 @@ const Navbar = () => {
           user ? (
             <Popover>
               <PopoverTrigger>
-                <Avatar className="cursor-pointer">
-                  {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-                  <AvatarImage src={profilePhoto} />
+                <Avatar className="cursor-pointer w-10 h-10 border border-gray-400 rounded-full flex items-center justify-center">
+                  <AvatarImage src={profilePhoto} alt="Profile" />
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent className="bg-white">
-                  <Button className="cursor-pointer"  variant="link" onClick={logoutHandler}>Logout</Button>
+                <Button
+                  className="cursor-pointer"
+                  variant="link"
+                  onClick={logoutHandler}
+                >
+                  Logout
+                </Button>
               </PopoverContent>
             </Popover>
+
           ) : (
             <div className='flex items-center gap-2'>
               <Link to="/login"><Button variant="outline" className=" hover:bg-green-500  cursor-pointer">Login</Button></Link>
-              <Link to="/login"><Button variant="outline"  className=" hover:bg-green-500  cursor-pointer">Register</Button></Link>
+              <Link to="/login"><Button variant="outline" className=" hover:bg-green-500  cursor-pointer">Register</Button></Link>
             </div>
           )
         }

@@ -19,8 +19,7 @@ const useGetAllGroupExpenses = (groupId) => {
 
       if (res.data.success) {
         dispatch(setGroupExpenses(res.data.expenses));
-        console.log(groupExpenses);
-
+        console.log(res.data.expenses);
       }
     } catch (error) {
       console.error(error);
@@ -29,7 +28,7 @@ const useGetAllGroupExpenses = (groupId) => {
 
   useEffect(() => {
     fetchExpenses();
-  }, [dispatch]);
+  }, [dispatch, groupId, groupExpenses]);
 
   return fetchExpenses; // <-- This is the change
 };

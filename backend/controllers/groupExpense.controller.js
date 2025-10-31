@@ -6,8 +6,8 @@ import { User } from "../models/user.model.js";
 
 export const createGroupExpense = async (req, res) => {
   try {
-    const { description, category, amount, originalCurrency} = req.body;
-    if (!description || !category || !amount || !originalCurrency )
+    const { description, category, amount, originalCurrency, paidBy} = req.body;
+    if (!description || !category || !amount || !originalCurrency || !paidBy)
       return res
         .status(400)
         .json({ msg: "All fields are required", success: false });

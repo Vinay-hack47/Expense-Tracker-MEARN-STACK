@@ -34,6 +34,7 @@ const CreateGroupExpense = ({ groupId, onCreate }) => {
     originalCurrency: "",
     paidBy: "",
   });
+  
 
   const dispatch = useDispatch();
 

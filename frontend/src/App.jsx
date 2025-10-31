@@ -1,57 +1,79 @@
 import './App.css'
-import { Button } from "@/components/ui/button"
-import { createBrowserRouter , RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Toaster } from "@/components/ui/sonner"
+
 import Login from './components/Login'
 import Home from './components/Home'
 import Register from './components/Register'
-import { Toaster } from "@/components/ui/sonner"
-import { useSelector } from 'react-redux'
-import GroupManagement from './components/GroupManagement'
 import Groups from './components/group/Groups'
 import GroupDetails from './components/group/GroupDetails'
 import GroupExpensePage from './components/group/GroupExpensePage'
-import GroupExpenseTable from './components/group/GroupExpenseTable'
+import ProtectedRoute from './components/ProtectedRoute' // ✅ import
 
 const appRouter = createBrowserRouter([
+  // redirect root to login or home depending on auth
   {
     path: '/',
-    element: <Home />,
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/login',
-    element: <Login />
+    element: <Login />,
   },
   {
     path: '/register',
-    element: <Register />
+    element: <Register />,
   },
   {
-    path: "/groups",
-    element : <Groups></Groups>
+    path: '/groups',
+    element: (
+      <ProtectedRoute>
+        <Groups />
+      </ProtectedRoute>
+    ),
   },
   {
-    path: "/groups/:groupId",
-    element : <GroupDetails></GroupDetails>
+    path: '/groups/:groupId',
+    element: (
+      <ProtectedRoute>
+        <GroupDetails />
+      </ProtectedRoute>
+    ),
   },
   {
-    path: "/expenses/group/:groupId",
-    element : <GroupExpensePage></GroupExpensePage>
+    path: '/expenses/group/:groupId',
+    element: (
+      <ProtectedRoute>
+        <GroupExpensePage />
+      </ProtectedRoute>
+    ),
   },
-])
+]);
 
 function App() {
-  const authState = useSelector((state) => state.auth);  // ✅ Check `auth` state
-  const expenseState = useSelector((state) => state.expense);  // ✅ Check `expense` state
+  const authState = useSelector((state) => state.auth);
+  const expenseState = useSelector((state) => state.expense);
+  const groupState = useSelector((state) => state.group);
+  const groupExpenseState = useSelector((state) => state.groupExpense)
 
   console.log("Auth State:", authState);
   console.log("Expense State:", expenseState);
+  console.log("Group State:", groupState);
+  console.log("Group Expense State:", groupExpenseState);
+  
+
 
   return (
     <>
-     <RouterProvider router={appRouter}></RouterProvider>
-     <Toaster />
+      <RouterProvider router={appRouter} />
+      <Toaster />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

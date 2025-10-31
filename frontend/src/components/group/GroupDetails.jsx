@@ -90,12 +90,12 @@ import CreateGroupDialog from "./CreateGroupExpense";
 import CreateGroupExpense from "./CreateGroupExpense";
 import useGetAllGroupExpenses from "@/hooks/useGetAllGroupExpenses";
 import { setGroupExpenses } from "@/redux/groupExpenseSlice";
+import useGetAllMyGroups from "@/hooks/useGetAllMyGroups";
 
 const GroupDetails = () => {
-  // const fetchAllMyGroups = useGetAllMyGroups(); // now a callable function
   const { groupId } = useParams();
   // useGetAllGroupExpenses(groupId);
-  const fetchExpenses = useGetAllGroupExpenses();
+  const fetchExpenses = useGetAllGroupExpenses(groupId);
 
   // const [group, setGroup] = useState(null);
   // const [loading, setLoading] = useState(true);

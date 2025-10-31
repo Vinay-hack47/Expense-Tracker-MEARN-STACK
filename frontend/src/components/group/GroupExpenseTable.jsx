@@ -13,16 +13,20 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { setGroupExpenses } from "@/redux/groupExpenseSlice";
+import useGetAllGroupExpenses from "@/hooks/useGetAllGroupExpenses";
 
 const GroupExpenseTable = () => {
+  useGetAllGroupExpenses();
   const dispatch = useDispatch();
   const { groupExpenses } = useSelector(s => s.groupExpense);
+  console.log(groupExpenses);
+  
   const {mySingleGroup} = useSelector((store) => store.group);
   const { user } = useSelector(s => s.auth);
   const [settled, setSettled] = useState({});
 
   const memberCount = mySingleGroup.members.length;
-  const total = groupExpenses.reduce((sum, e) => sum + e.amount, 0);
+  const total = (groupExpenses || []).reduce((sum, e) => sum + e.amount, 0);
   console.log(total);
   
 

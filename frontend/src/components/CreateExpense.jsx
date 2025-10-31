@@ -49,9 +49,6 @@ const CreateExpense = ({ groupId = null }) => {
     }
   }, [groupId])
 
-  console.log(expenseData);
-
-
   const navigate = useNavigate();
 
   const [groups, setGroups] = useState([]); // State to store the list of groups

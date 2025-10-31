@@ -16,6 +16,7 @@ const useGetAllMyGroups = () => {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/group/my-groups`);
       if (res.data.success) {
         dispatch(setAllMyGroups(res.data.groups));
+        console.log(res.data.groups)
       }
     } catch (error) {
       console.error(error);

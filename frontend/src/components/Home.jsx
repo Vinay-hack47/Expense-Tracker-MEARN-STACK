@@ -15,25 +15,39 @@ import { setCategory, setMarkAsDone } from '@/redux/expenseSlice'
 import ExpenseTable from './ExpenseTable'
 import useGetExpenses from '@/hooks/useGetExpenses'
 import GroupManagement from './GroupManagement'
+import useGetAllMyGroups from '@/hooks/useGetAllMyGroups'
+import { Button } from './ui/button'
+import { useNavigate } from 'react-router-dom'
+import { Plus } from 'lucide-react'
 
 const Home = () => {
+  const fetchAllMyGroups = useGetAllMyGroups();
   useGetExpenses();
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
   const changeCategoryHandler = (value) => {
-      dispatch(setCategory(value));
+    dispatch(setCategory(value));
   }
   const changeDoneHandler = (value) => {
     dispatch(setMarkAsDone(value));
   }
-  
+
   return (
     <div>
       <Navbar></Navbar>
       <div className='max-w-6xl mx-auto mt-6'>
         <div className='flex items-center justify-between mb-5'>
           <h1 className='font-bold text-xl'>Expenses</h1>
-          <CreateExpense></CreateExpense>
+          <div className="flex items-center gap-2">
+            <CreateExpense />
+            <Button
+              onClick={() => navigate("/groups")}
+              className="cursor-pointer bg-green-600 text-white"
+            >
+              <Plus className="h-5 w-5" /> Add New Group Expense
+            </Button>
+          </div>
         </div>
 
         <div className='flex items-center gap-2'>
