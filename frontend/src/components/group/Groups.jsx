@@ -11,13 +11,23 @@ import GroupManagement from "../GroupManagement";
 import CreateGroupDialog from "./CreateGroupDialog";
 
 const Groups = () => {
+  useGetAllMyGroups();
   const dispatch = useDispatch();
   const {allMyGroups} = useSelector((store) => store.group)
+  console.log("hihi");
   
+  console.log(allMyGroups);
+
+
+  const getAllMyGroups = useGetAllMyGroups();
+
   const [groups, setGroups] = useState([]);
   
   const [loading, setLoading] = useState(false);
 
+  const handleGroupCreated = () =>{
+    getAllMyGroups();
+  }
 
   return (
     <div>
@@ -25,7 +35,7 @@ const Groups = () => {
       <div className="p-6 space-y-6 mt-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">My Groups</h1>
-          <CreateGroupDialog /> 
+          <CreateGroupDialog onCreated={handleGroupCreated} /> 
         </div>
 
         {loading ? (
